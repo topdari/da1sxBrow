@@ -9,58 +9,92 @@
 <body>
   <header>
     <input type="checkbox" id="theme-toggle" title="Переключить тему" />
-
     <div class="container">
       <div class="logo">da1sx.brows</div>
       <nav><a href="index.html">Главная</a></nav>
     </div>
   </header>
+
   <section class="hero">
     <div class="container">
       <h1>Коррекция бровей</h1>
       <p>Придание формы бровям с учётом вашей индивидуальности.</p>
       <img src="images/korek.jpg" alt="Коррекция" />
-      <a href="#contact" class="btn">Записаться</a>
+      <a href="#booking" class="btn">Записаться</a>
     </div>
   </section>
+
+  <section class="service-info fade-in">
+    <div class="container">
+      <h2>Информация об услуге</h2>
+      <p>Стоимость: 400 ₽</p>
+      <p>Длительность процедуры: 15–30 минут</p>
+    </div>
+  </section>
+  
+
   <section id="contact" class="contact">
     <div class="container">
       <h2>Контакты</h2>
       <p>Email: da1sx.brows@gmail.com</p>
     </div>
   </section>
+
   <section class="booking" id="booking">
     <div class="container">
       <h2>Записаться на услугу</h2>
       <form id="booking-form">
         <input type="text" name="name" placeholder="Ваше имя" required>
         <input type="tel" name="phone" placeholder="Телефон" required>
+
         <label for="date">Выберите дату:</label>
         <input type="date" name="date" id="date" required>
-        <textarea name="message" placeholder="Комментарий (желаемое время)" rows="4"></textarea>
+
+        <label for="time">Выберите время:</label>
+        <select name="time" id="time" required>
+          <!-- Время загрузится через JS -->
+        </select>
+
+        <textarea name="message" placeholder="Комментарий (необязательно)" rows="4"></textarea>
         <button type="submit">Отправить</button>
         <p id="form-status" class="form-status"></p>
       </form>
     </div>
   </section>
-  
+
   <script>
-  document.getElementById("booking-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const name = this.name.value;
-    const phone = this.phone.value;
-    const message = this.message.value;
-    const service = this.service.value;
-  
-    const token = "7757560197:AAEKEtBoRbjw7SSVG7secn-bqcLAsdNE-SU";
-    const chat_id = "1005132093";
-    const text = `📝 Запись на услугу: ${service}\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n💬 Комментарий: ${message}`;
-  
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id, text })
-    })
+    const dateInput = document.getElementById("date");
+    const today = new Date().toISOString().split("T")[0];
+    dateInput.min = today;
+
+    const slots = ["10:00", "11:00", "12:00", "14:00", "16:00"];
+    const timeSelect = document.getElementById("time");
+    slots.forEach(time => {
+      const option = document.createElement("option");
+      option.value = time;
+      option.textContent = time;
+      timeSelect.appendChild(option);
+    });
+
+    document.getElementById("booking-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = this.name.value;
+      const phone = this.phone.value;
+      const date = this.date.value;
+      const time = this.time.value;
+      const message = this.message.value;
+
+      const token = "7757560197:AAEKEtBoRbjw7SSVG7secn-bqcLAsdNE-SU";
+      const chat_id = "1005132093";
+
+      const text = `📝 Запись на услугу: Коррекция бровей\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n📅 Дата: ${date}\n🕒 Время: ${time}\n💬 Комментарий: ${message}`;
+
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id, text })
+      })
       .then((res) => {
         document.getElementById("form-status").innerText = res.ok
           ? "✅ Запись отправлена!" : "❌ Ошибка при отправке.";
@@ -69,9 +103,29 @@
       .catch(() => {
         document.getElementById("form-status").innerText = "❌ Ошибка подключения.";
       });
-  });
+    });
   </script>
-  <script src="theme.js"></script>
 
+  <script src="theme.js"></script>
+  <script>
+    const faders = document.querySelectorAll('.fade-in');
+  
+    const appearOptions = {
+      threshold: 0.2,  // Появляется, когда 20% блока видно
+    };
+  
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+  
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+  
 </body>
 </html>

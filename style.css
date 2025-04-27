@@ -64,7 +64,7 @@ nav a:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 182, 193, 0.7); /* розовый слой */
+  background: rgba(255, 182, 193, 0.7);
   z-index: -1;
 }
 
@@ -98,6 +98,15 @@ nav a:hover {
 .hero .btn:hover {
   background-color: #ff4081;
   box-shadow: 0 0 20px #fff;
+}
+
+.hero img {
+  max-width: 100%;
+  width: 500px;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border-radius: 16px;
 }
 
 /* Услуги */
@@ -258,6 +267,37 @@ footer {
   font-weight: bold;
 }
 
+/* Блок информации об услуге */
+.service-info {
+  padding: 40px 0;
+  background-color: #f7f7f7;
+  text-align: center;
+  border-radius: 12px;
+  margin: 30px 0;
+}
+
+.service-info h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.service-info p {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+/* Анимации */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Мобильная адаптация */
 @media (max-width: 768px) {
   nav {
@@ -321,7 +361,8 @@ body.dark .booking form {
 body.dark .services h2,
 body.dark .about h2,
 body.dark .contact h2,
-body.dark .booking h2 {
+body.dark .booking h2,
+body.dark .service-info h2 {
   color: #ff90c2;
 }
 
@@ -329,8 +370,13 @@ body.dark .services .card h3,
 body.dark .about p,
 body.dark .contact p,
 body.dark .contact a,
-body.dark footer {
+body.dark footer,
+body.dark .service-info p {
   color: #ccc;
+}
+
+body.dark .service-info {
+  background-color: #1e1e1e;
 }
 
 body.dark input,
@@ -342,14 +388,18 @@ body.dark textarea {
 
 body.dark .btn,
 body.dark button {
-  background-color: #444;
+  background-color: #ff5e9c;
+  box-shadow: 0 0 10px #ff5e9c;
   color: #fff;
 }
 
 body.dark .btn:hover,
 body.dark button:hover {
-  background-color: #666;
+  background-color: #ff4081;
+  box-shadow: 0 0 20px #ff4081;
 }
+
+/* Переключатель темы */
 .theme-toggle {
   background: none;
   border: none;
@@ -366,12 +416,4 @@ body.dark button:hover {
 
 body.dark .theme-toggle {
   color: #ffcce0;
-}
-.hero img {
-  max-width: 100%;
-  width: 500px;
-  height: auto;
-  display: block;
-  margin: 20px auto;
-  border-radius: 16px;
 }
