@@ -33,6 +33,37 @@
     </div>
   </section>
 
+  <section class="bonus" style="background: #fdeef4; padding: 1rem; text-align: center;">
+    <div id="bonus-info" style="font-family: 'Montserrat', sans-serif;"></div>
+  </section>
+  
+  <script>
+    const bonusBlock = document.getElementById("bonus-info");
+    const user = JSON.parse(localStorage.getItem("user"));
+  
+    if (user) {
+      // Увеличиваем счётчик
+      user.visits = (user.visits || 0) + 1;
+      localStorage.setItem("user", JSON.stringify(user));
+  
+      let message = `👋 Привет, ${user.name}!<br>Это ваше посещение №${user.visits}.`;
+  
+      if (user.visits >= 6) {
+        message += `<br>🎉 Вам доступна <b>скидка 10%</b>!`;
+      } else {
+        message += `<br>📌 Осталось ${6 - user.visits} до скидки.`;
+      }
+  
+      bonusBlock.innerHTML = `<strong>Ваш Бонус</strong><br>${message}`;
+    } else {
+      bonusBlock.innerHTML = `
+        <strong style="color:#ccc">Ваш Бонус</strong><br>
+        👋 Пожалуйста, <a href="auth.html">войдите</a>, чтобы начать копить бонусы.
+      `;
+    }
+  </script>
+  
+  
   <section id="services" class="services">
     <div class="container">
       <h2>Услуги</h2>
@@ -104,6 +135,13 @@
   </section>
 
   <footer>
+    <section class="bonus" id="bonus-block" style="display: none;">
+      <strong>🎁 Поздравляем!</strong>
+      Это ваше 6-е посещение! Получите <b>скидку 10%</b> на следующую процедуру!
+      <br>
+      <a href="#booking">Записаться сейчас</a>
+    </section>
+    
     <div class="container">
       <p>© 2025 da1sx.brows</p>
     </div>
@@ -184,13 +222,39 @@
         body: JSON.stringify({ chat_id: chat_id, text: text })
       })
       .then(res => {
-        document.getElementById("form-status").innerText = res.ok ? "✅ Запись отправлена!" : "❌ Ошибка при отправке.";
+        document.getElementById("form-status").innerText = res.ok ? "🎀 Запись отправлена!" : "❌ Ошибка при отправке.";
         if (res.ok) this.reset();
       })
       .catch(() => {
         document.getElementById("form-status").innerText = "❌ Ошибка подключения.";
       });
     });
+    // 💎 Бонусная система
+const bonusInfo = document.getElementById("bonus-info");
+const logoutBtn = document.getElementById("logout");
+
+if (bonusInfo) {
+  const visits = parseInt(localStorage.getItem("visits")) || 0;
+
+  if (visits >= 6) {
+    bonusInfo.innerHTML = `🎉 Это ваше <strong>${visits}</strong>-е посещение.<br><strong>Скидка 10% активирована!</strong>`;
+  } else if (visits > 0) {
+    bonusInfo.innerHTML = `🔄 Это ваше <strong>${visits}</strong>-е посещение.<br>До скидки осталось: <strong>${6 - visits}</strong>`;
+  } else {
+    bonusInfo.innerHTML = `👋 Пожалуйста, <a href="login.html">войдите</a>, чтобы начать копить бонусы.`;
+    logoutBtn.style.display = "none";
+  }
+
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("visits");
+    window.location.href = "login.html";
+  });
+}
+
+  if (localStorage.getItem('authorized') !== 'true') {
+    window.location.href = 'auth.html'; // если не вошёл — отправим на авторизацию
+  }
+
   </script>
 
 </body>

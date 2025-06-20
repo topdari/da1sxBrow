@@ -417,3 +417,27 @@ body.dark button:hover {
 body.dark .theme-toggle {
   color: #ffcce0;
 }
+/* 💅 Стили для бонусного блока */
+.bonus {
+  background-color: #fdeef4;
+  border-top: 2px dashed #e2b4c4;
+  border-bottom: 2px dashed #e2b4c4;
+  padding: 2rem 1rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.bonus strong {
+  display: block;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #c93f7c;
+}
+
+.bonus a {
+  color: #c93f7c;
+  text-decoration: underline;
+}

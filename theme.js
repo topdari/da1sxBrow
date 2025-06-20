@@ -38,4 +38,15 @@ if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.contains('dark') ? 'dark' : 'light');
     });
   }
-  
+  // 🎯 Подсчёт посещений и бонус
+(function() {
+  const visitsKey = 'user_visits';
+  let visits = parseInt(localStorage.getItem(visitsKey)) || 0;
+  visits += 1;
+  localStorage.setItem(visitsKey, visits);
+
+  if (visits >= 6) {
+    const bonusBlock = document.getElementById("bonus-block");
+    if (bonusBlock) bonusBlock.style.display = "block";
+  }
+})();
