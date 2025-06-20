@@ -2,68 +2,94 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Авторизация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Вход | da1sx.brows</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      font-family: sans-serif;
-      background: #ffd6e8;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fdf7f3;
       display: flex;
-      height: 100vh;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    .auth-container {
-      background: ffd6e8;
-      padding: 30px;
+
+    .login-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-container h1 {
+      margin-bottom: 1rem;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      font-size: 1rem;
     }
-    input {
-      display: block;
-      margin: 10px 0;
-      padding: 10px;
-      width: 100%;
-    }
-    button {
-      padding: 10px;
-      width: 100%;
-      background: #444;
+
+    .login-container button {
+      background: #c19b8f;
       color: white;
       border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 10px;
       cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
     }
-    #error {
+
+    .login-container button:hover {
+      background: #a57f73;
+    }
+
+    .form-status {
+      margin-top: 1rem;
       color: red;
-      margin-top: 10px;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <div class="auth-container">
-    <h2>Вход</h2>
+
+  <div class="login-container">
+    <h1>Вход</h1>
     <form id="login-form">
-      <input type="text" id="login" placeholder="Логин" required />
+      <input type="text" id="username" placeholder="Ваше имя" required />
       <input type="password" id="password" placeholder="Пароль" required />
       <button type="submit">Войти</button>
     </form>
-    <p id="error"></p>
+    <p id="login-status" class="form-status"></p>
   </div>
 
   <script>
-    document.getElementById('login-form').addEventListener('submit', function (e) {
+    document.getElementById("login-form").addEventListener("submit", function(e) {
       e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-      const login = document.getElementById('login').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const errorMessage = document.getElementById('error');
-
-      if (login === 'admin' && password === '1234') {
-        localStorage.setItem('authorized', 'true');
-        window.location.href = 'index.html';
+      if (username && password) {
+        localStorage.setItem("user", JSON.stringify({ name: username, visits: 0 }));
+        window.location.href = "index.html";
       } else {
-        errorMessage.textContent = '❌ Неверный логин или пароль';
+        document.getElementById("login-status").innerText = "❌ Введите имя и пароль.";
       }
     });
   </script>
+
 </body>
 </html>

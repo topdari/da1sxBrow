@@ -417,27 +417,70 @@ body.dark button:hover {
 body.dark .theme-toggle {
   color: #ffcce0;
 }
-/* 💅 Стили для бонусного блока */
-.bonus {
-  background-color: #fdeef4;
-  border-top: 2px dashed #e2b4c4;
-  border-bottom: 2px dashed #e2b4c4;
-  padding: 2rem 1rem;
-  text-align: center;
-  font-family: 'Montserrat', sans-serif;
-  color: #333;
-  font-size: 1rem;
-  line-height: 1.6;
+/* Личный кабинет — бонусы */
+.bonus-card {
+background-color: #fff0f5;
+padding: 30px;
+border-radius: 16px;
+box-shadow: 0 6px 15px rgba(240, 98, 146, 0.2);
+text-align: center;
+margin: 40px auto;
+max-width: 600px;
+animation: fadeInUp 0.8s ease-out;
 }
 
-.bonus strong {
-  display: block;
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  color: #c93f7c;
+.bonus-card p {
+font-size: 1.2rem;
+color: #d85b9e;
+margin-bottom: 20px;
 }
 
-.bonus a {
-  color: #c93f7c;
-  text-decoration: underline;
+.bonus-card strong {
+color: #e91e63;
+font-weight: 600;
+}
+
+.bonus-card button {
+background-color: #f06292;
+color: white;
+padding: 10px 24px;
+font-size: 1rem;
+border: none;
+border-radius: 30px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.bonus-card button:hover {
+background-color: #e5396e;
+}
+/* 🌙 Темная тема — бонус блок */
+body.dark .bonus-card {
+background-color: #1e1e1e;
+box-shadow: 0 6px 15px rgba(255, 255, 255, 0.05);
+}
+
+body.dark .bonus-card p,
+body.dark .bonus-card strong {
+color: #ffcce0;
+}
+
+body.dark .bonus-card button {
+background-color: #444;
+color: #fff;
+}
+
+body.dark .bonus-card button:hover {
+background-color: #666;
+}
+/* Анимация */
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }

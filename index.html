@@ -10,20 +10,23 @@
 </head>
 
 <body>
-  <header>
-    <button id="theme-toggle" class="theme-toggle" aria-label="Сменить тему">
-      <i class="fas fa-moon"></i>
-    </button>    
-    <div class="container">
-      <div class="logo">da1sx.brows</div>
-      <nav>
-        <a href="#">Главная</a>
-        <a href="#services">Услуги</a>
-        <a href="#about">Обо мне</a>
-        <a href="#contact">Контакты</a>
-      </nav>
-    </div>
-  </header>
+ <header>
+  <button id="theme-toggle" class="theme-toggle" aria-label="Сменить тему">
+    <i class="fas fa-moon"></i>
+  </button>
+  <div class="container">
+    <div class="logo">da1sx.brows</div>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="#services">Услуги</a>
+      <a href="#about">Обо мне</a>
+      <a href="#contact">Контакты</a>
+      <a href="login.html" id="auth-link" class="auth-link">Войти</a>
+      <button id="logout-btn" class="logout-btn" style="display:none;">Выйти</button>
+    </nav>
+  </div>
+</header>
+
 
   <section class="hero">
     <div class="container">
@@ -35,7 +38,7 @@
 
   <section class="bonus" style="background: #fdeef4; padding: 1rem; text-align: center;">
     <div id="bonus-info" style="font-family: 'Montserrat', sans-serif;"></div>
-  </section>
+  </section><section class="bonus fade-in" id="bonus-block" style="display: none;"> <div class="container"> <div class="bonus-card"> <p id="bonus-info"></p> <button id="logout-button">Выйти</button> </div> </div> </section>
   
   <script>
     const bonusBlock = document.getElementById("bonus-info");
@@ -135,37 +138,56 @@
   </section>
 
   <footer>
+   
     <section class="bonus" id="bonus-block" style="display: none;">
-      <strong>🎁 Поздравляем!</strong>
-      Это ваше 6-е посещение! Получите <b>скидку 10%</b> на следующую процедуру!
-      <br>
-      <a href="#booking">Записаться сейчас</a>
-    </section>
-    
-    <div class="container">
-      <p>© 2025 da1sx.brows</p>
-    </div>
+  <strong>🎁 Поздравляем!</strong>
+  Это ваше 6-е посещение! Получите <b>скидку 10%</b> на следующую процедуру!
+  <br>
+  <a href="#booking">Записаться сейчас</a>
+</section>
+<div class="container">
+  <p>© 2025 da1sx.brows</p>
+</div>
   </footer>
 
   <script>
+  document.addEventListener("DOMContentLoaded", () => {
     // Темная тема
     const toggleBtn = document.getElementById("theme-toggle");
-    const icon = toggleBtn.querySelector("i");
-    
+    const icon = toggleBtn?.querySelector("i");
+
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark") {
       document.body.classList.add("dark");
-      icon.classList.remove("fa-moon");
-      icon.classList.add("fa-sun");
+      icon?.classList.remove("fa-moon");
+      icon?.classList.add("fa-sun");
     }
 
-    toggleBtn.addEventListener("click", () => {
+    toggleBtn?.addEventListener("click", () => {
       document.body.classList.toggle("dark");
       const isDark = document.body.classList.contains("dark");
       localStorage.setItem("theme", isDark ? "dark" : "light");
-      icon.classList.toggle("fa-sun");
-      icon.classList.toggle("fa-moon");
+      icon?.classList.toggle("fa-sun");
+      icon?.classList.toggle("fa-moon");
     });
+
+    // Авторизация
+    const authLink = document.getElementById("auth-link");
+    const logoutBtn = document.getElementById("logout-btn");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user && authLink && logoutBtn) {
+      authLink.textContent = user.name || "Профиль";
+      authLink.href = "profile.html";
+      logoutBtn.style.display = "inline-block";
+
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("authorized");
+        window.location.href = "login.html";
+      });
+    }
+  });
 
     // 📅 Свободные слоты по услугам
     const slots = {
@@ -230,32 +252,46 @@
       });
     });
     // 💎 Бонусная система
-const bonusInfo = document.getElementById("bonus-info");
-const logoutBtn = document.getElementById("logout");
 
-if (bonusInfo) {
-  const visits = parseInt(localStorage.getItem("visits")) || 0;
+  document.addEventListener("DOMContentLoaded", () => {
+    // Темная тема
+    const toggleBtn = document.getElementById("theme-toggle");
+    const icon = toggleBtn?.querySelector("i");
 
-  if (visits >= 6) {
-    bonusInfo.innerHTML = `🎉 Это ваше <strong>${visits}</strong>-е посещение.<br><strong>Скидка 10% активирована!</strong>`;
-  } else if (visits > 0) {
-    bonusInfo.innerHTML = `🔄 Это ваше <strong>${visits}</strong>-е посещение.<br>До скидки осталось: <strong>${6 - visits}</strong>`;
-  } else {
-    bonusInfo.innerHTML = `👋 Пожалуйста, <a href="login.html">войдите</a>, чтобы начать копить бонусы.`;
-    logoutBtn.style.display = "none";
-  }
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark");
+      icon?.classList.remove("fa-moon");
+      icon?.classList.add("fa-sun");
+    }
 
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("visits");
-    window.location.href = "login.html";
+    toggleBtn?.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      icon?.classList.toggle("fa-sun");
+      icon?.classList.toggle("fa-moon");
+    });
+
+    // Авторизация
+    const authLink = document.getElementById("auth-link");
+    const logoutBtn = document.getElementById("logout-btn");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user && authLink && logoutBtn) {
+      authLink.textContent = user.name || "Профиль";
+      authLink.href = "profile.html";
+      logoutBtn.style.display = "inline-block";
+
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("authorized");
+        window.location.href = "login.html";
+      });
+    }
   });
-}
-
-  if (localStorage.getItem('authorized') !== 'true') {
-    window.location.href = 'auth.html'; // если не вошёл — отправим на авторизацию
-  }
-
-  </script>
+  
+</script>
 
 </body>
 </html>
